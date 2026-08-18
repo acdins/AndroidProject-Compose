@@ -26,10 +26,14 @@ class DatabaseViewModel @Inject constructor(
 
     /** 标题输入 */
     private val _title = MutableStateFlow("")
+
+    /** 对外暴露的标题输入状态 */
     val title: StateFlow<String> = _title.asStateFlow()
 
     /** 描述输入 */
     private val _description = MutableStateFlow("")
+
+    /** 对外暴露的描述输入状态 */
     val description: StateFlow<String> = _description.asStateFlow()
 
     /**
@@ -73,6 +77,7 @@ class DatabaseViewModel @Inject constructor(
      * @author Joker.X
      */
     fun addItem() {
+        // 去除首尾空格后的标题
         val title = _title.value.trim()
         if (title.isBlank()) return
         viewModelScope.launch {

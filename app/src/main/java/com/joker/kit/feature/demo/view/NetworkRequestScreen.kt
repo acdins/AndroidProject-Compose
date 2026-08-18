@@ -33,7 +33,7 @@ import com.joker.kit.feature.demo.viewmodel.NetworkRequestViewModel
 internal fun NetworkRequestRoute(
     viewModel: NetworkRequestViewModel = hiltViewModel()
 ) {
-    // 商品信息
+    // 收集商品信息状态
     val goods by viewModel.goods.collectAsState()
 
     NetworkRequestScreen(
@@ -67,7 +67,7 @@ internal fun NetworkRequestScreen(
 }
 
 /**
- * 网络请求内容视图
+ * 网络请求页面内容
  *
  * @param goods 商品信息
  * @param onRequestClick 请求按钮回调

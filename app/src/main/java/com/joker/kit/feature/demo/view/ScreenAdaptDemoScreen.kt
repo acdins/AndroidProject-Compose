@@ -72,28 +72,35 @@ internal fun ScreenAdaptDemoScreen() {
         titleText = "屏幕适配示例",
         onBackClick = { navigateBack() }
     ) {
-        ScreenAdaptDemoContentView()
+        ScreenAdaptDemoContent()
     }
 }
 
 /**
- * 屏幕适配示例页面内容视图
+ * 屏幕适配示例页面内容
  *
  * @author Joker.X
  */
 @Composable
-private fun ScreenAdaptDemoContentView() {
+private fun ScreenAdaptDemoContent() {
+    // 当前窗口断点编码
     val breakpointCode = bp(xs = "xs", sm = "sm", md = "md", lg = "lg")
+    // 网格示例在当前断点使用的列数
     val gridColumns = bp(xs = 2, sm = 2, md = 3, lg = 4)
+    // 列表示例在当前断点使用的列数
     val listColumns = bp(xs = 1, sm = 1, md = 2, lg = 2)
+    // 文本示例在当前断点使用的字号
     val sampleTextSize = bp(
         xs = TextSize.BODY_LARGE,
         sm = TextSize.BODY_LARGE,
         md = TextSize.TITLE_LARGE,
         lg = TextSize.DISPLAY_LARGE
     )
+    // 尺寸示例在当前断点使用的边长
     val sampleBoxSize = bp(xs = 80.dp, sm = 80.dp, md = 96.dp, lg = 120.dp)
+    // 网格示例数据
     val gridItems = listOf(1, 2, 3, 4, 5, 6)
+    // 列表示例数据
     val listItems = listOf(1, 2, 3, 4)
 
     LazyColumn(
@@ -337,14 +344,21 @@ private fun <T> MeasuredGrid(
     items: List<T>,
     itemContent: @Composable (item: T, modifier: Modifier) -> Unit
 ) {
+    // 当前屏幕密度
     val density = LocalDensity.current
+    // 防止无效列数导致网格计算异常
     val safeColumns = columns.coerceAtLeast(1)
+    // 当前数据和列数对应的总行数
     val rowCount = ceil(items.size / safeColumns.toFloat()).toInt().coerceAtLeast(1)
+    // 已测量的最大子项高度，单位为像素
     var measuredItemHeightPx by remember(columns, items.size) { mutableIntStateOf(0) }
+    // 尚未完成测量时使用的默认子项高度
     val fallbackItemHeight = 84.dp
+    // 网格子项最终高度
     val itemHeight = with(density) {
         if (measuredItemHeightPx > 0) measuredItemHeightPx.toDp() else fallbackItemHeight
     }
+    // 全部行与行间距对应的网格总高度
     val gridHeight = (itemHeight * rowCount) + (SpacePaddingSmall * (rowCount - 1))
 
     LazyVerticalGrid(
@@ -372,6 +386,8 @@ private fun <T> MeasuredGrid(
 /**
  * 通用适配卡片
  *
+ * @param modifier 卡片修饰符
+ * @param horizontalAlignment 卡片内容水平对齐方式
  * @param content 卡片内容
  * @author Joker.X
  */
@@ -397,6 +413,8 @@ private fun AdaptiveCard(
  * 卡片标题
  *
  * @param title 标题
+ * @param modifier 标题修饰符
+ * @param textAlign 标题文本对齐方式
  * @author Joker.X
  */
 @Composable
@@ -418,6 +436,7 @@ private fun CardTitle(
  *
  * @param text 文本
  * @param modifier 修饰符
+ * @param textAlign 说明文本对齐方式
  * @author Joker.X
  */
 @Composable

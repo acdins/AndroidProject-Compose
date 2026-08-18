@@ -49,13 +49,13 @@ import com.joker.kit.feature.demo.viewmodel.LocalStorageViewModel
 internal fun LocalStorageRoute(
     viewModel: LocalStorageViewModel = hiltViewModel()
 ) {
-    // 用户 ID 输入状态
+    // 收集用户 ID 输入状态
     val userId by viewModel.userId.collectAsState()
-    // 昵称输入状态
+    // 收集昵称输入状态
     val nickName by viewModel.nickName.collectAsState()
-    // 头像链接输入状态
+    // 收集头像链接输入状态
     val avatar by viewModel.avatar.collectAsState()
-    // 当前已保存的用户信息
+    // 收集当前已保存的用户信息
     val user by viewModel.user.collectAsState()
 
     LocalStorageScreen(
@@ -121,7 +121,7 @@ internal fun LocalStorageScreen(
 }
 
 /**
- * 本地存储内容视图
+ * 本地存储页面内容
  *
  * @param userId 用户 ID 输入
  * @param nickName 昵称输入
@@ -253,8 +253,11 @@ private fun UserCard(
 
             HorizontalDivider()
 
+            // 本地用户信息展示文案
             val userText = user?.let {
+                // 昵称为空时使用的展示文案
                 val name = it.nickName ?: "未设置昵称"
+                // 头像为空时使用的展示文案
                 val avatarUrl = it.avatarUrl ?: "无头像"
                 "当前用户: id=${it.id}, 昵称=$name\n头像=$avatarUrl"
             } ?: "暂无本地用户信息"

@@ -44,8 +44,9 @@ AndroidProject-Compose is a **single-module Jetpack Compose scaffold** that ship
 
 ### Documentation
 
-- **Docs**: [View online](https://compose.dusksnow.top)
-- **Note**: Online docs stay in sync with the code and cover quick start, architecture, sample routes, common customization points, and more.
+- **Repository docs (Chinese)**: [View locally](docs/android-project-compose/README.md)
+- **Online docs**: [compose.dusksnow.top](https://compose.dusksnow.top)
+- **Note**: The repository and online docs cover quick start, architecture, Core capabilities, navigation, and Feature development conventions.
 
 ## 🛠️ Tech Stack
 
@@ -106,21 +107,19 @@ AndroidProject-Compose is a **single-module Jetpack Compose scaffold** that ship
 
 ```
 ├── core/                 # Core
+│   ├── annotation/       # Shared annotations
 │   ├── base/             # Base abstractions
 │   ├── data/             # Data layer
 │   ├── database/         # Database
 │   ├── datastore/        # Data storage
 │   ├── designsystem/     # Design system
 │   ├── model/            # Data models
+│   ├── navigation/       # Navigation runtime and routes
 │   ├── network/          # Network layer
 │   ├── result/           # Result handling
 │   ├── state/            # State management
 │   ├── ui/               # UI components
 │   └── util/             # Utilities
-├── navigation/           # Navigation module
-│   ├── routes/           # Route definitions
-│   ├── results/          # Route results
-│   └── extension/        # Navigation extensions
 ├── feature/              # Feature modules
 │   ├── main/             # Main module
 │   ├── auth/             # Auth module

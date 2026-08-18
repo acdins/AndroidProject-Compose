@@ -37,15 +37,18 @@ import com.joker.kit.feature.main.viewmodel.NavigationViewModel
 internal fun NavigationRoute(
     viewModel: NavigationViewModel = hiltViewModel()
 ) {
+    // 收集导航示例卡片列表
     val cards by viewModel.cards.collectAsState()
+    // 收集全局登录状态
     val isLoggedIn by viewModel.isLoggedIn.collectAsState()
+    // 收集页面回传结果
     val demoResult by viewModel.demoResult.collectAsState()
 
     NavigationScreen(
         cards = cards,
         isLoggedIn = isLoggedIn,
         demoResult = demoResult,
-        onCardClick = { info -> info.navigateAction?.invoke() }
+        onCardClick = viewModel::onCardClick
     )
 }
 
@@ -64,6 +67,30 @@ internal fun NavigationScreen(
     isLoggedIn: Boolean = false,
     demoResult: DemoResult? = null,
     onCardClick: (DemoCardInfo) -> Unit = {}
+) {
+    NavigationContent(
+        cards = cards,
+        isLoggedIn = isLoggedIn,
+        demoResult = demoResult,
+        onCardClick = onCardClick
+    )
+}
+
+/**
+ * Navigation 页面内容
+ *
+ * @param cards Demo 卡片列表
+ * @param isLoggedIn 是否已登录，登录后展示提示
+ * @param demoResult 回传结果
+ * @param onCardClick 卡片点击回调
+ * @author Joker.X
+ */
+@Composable
+private fun NavigationContent(
+    cards: List<DemoCardInfo>,
+    isLoggedIn: Boolean,
+    demoResult: DemoResult?,
+    onCardClick: (DemoCardInfo) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier

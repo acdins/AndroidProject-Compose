@@ -52,7 +52,7 @@ internal fun NavigationWithArgsScreen(
 }
 
 /**
- * 带参跳转内容视图
+ * 带参跳转页面内容
  *
  * @param goodsId 传入的商品 ID
  * @author Joker.X

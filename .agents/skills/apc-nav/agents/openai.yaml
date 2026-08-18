@@ -1,0 +1,4 @@
+interface:
+  display_name: "APC Navigation"
+  short_description: "配置 Navigation 3 路由、参数、结果与拦截"
+  default_prompt: "使用 $apc-nav 为这个页面接入类型安全导航。"

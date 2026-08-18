@@ -16,11 +16,7 @@ android {
     // https://developer.android.com/jetpack/androidx/versions?hl=zh-cn
     namespace = "com.joker.kit"
     // 编译期使用的 SDK 版本
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 37
 
     defaultConfig {
         // 最终安装包 ID
@@ -28,11 +24,11 @@ android {
         // 支持的最低 Android 版本
         minSdk = 23
         // Play 建议的目标 Android 版本
-        targetSdk = 36
+        targetSdk = 37
         // 递增的内部版本号
-        versionCode = 3
+        versionCode = 4
         // 显示给用户的版本名称
-        versionName = "1.1.1"
+        versionName = "1.1.2"
 
         // Instrumentation 测试入口
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -204,6 +200,8 @@ dependencies {
 
     // 调试工具
     debugImplementation(libs.leakcanary.android)
+    debugImplementation(libs.logcat)
+    debugImplementation(libs.custom.activity.on.crash)
 
     // 单元 / UI 测试
     testImplementation(libs.junit)

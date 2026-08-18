@@ -29,4 +29,14 @@ class ExpandViewModel @Inject constructor() : BaseViewModel() {
      * @author Joker.X
      */
     val cards: StateFlow<List<DemoCardInfo>> = _cards.asStateFlow()
+
+    /**
+     * 处理 Demo 卡片点击
+     *
+     * @param info Demo 卡片信息
+     * @author Joker.X
+     */
+    fun onCardClick(info: DemoCardInfo) {
+        info.navigateAction?.invoke()
+    }
 }

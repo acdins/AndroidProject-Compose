@@ -30,12 +30,14 @@ class LoginViewModel @Inject constructor(
      */
     fun login() {
         viewModelScope.launch {
+            // 演示登录使用的认证信息
             val fakeAuth = Auth(
                 token = "demo-token",
                 refreshToken = "demo-refresh",
                 expire = 3600,
                 refreshExpire = 7200,
             )
+            // 演示登录使用的用户信息
             val fakeUser = User(
                 id = 1,
                 nickName = "演示用户",

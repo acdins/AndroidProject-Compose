@@ -1,0 +1,4 @@
+interface:
+  display_name: "APC Feature"
+  short_description: "创建和重构 Compose 业务域、页面及分层结构"
+  default_prompt: "使用 $apc-feature 创建一个符合项目架构规范的业务页面。"

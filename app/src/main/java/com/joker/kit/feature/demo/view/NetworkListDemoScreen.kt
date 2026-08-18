@@ -8,9 +8,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.joker.kit.core.annotation.ScreenPreview
+import com.joker.kit.core.annotation.ScreenPreviewDark
 import com.joker.kit.core.base.state.BaseNetWorkListUiState
+import com.joker.kit.core.data.preview.GoodsPreviewParameterProvider
 import com.joker.kit.core.designsystem.theme.AppTheme
 import com.joker.kit.core.designsystem.theme.ShapeMedium
 import com.joker.kit.core.model.entity.Goods
@@ -104,7 +107,7 @@ internal fun NetworkListDemoScreen(
 }
 
 /**
- * Network List Demo 内容视图
+ * Network List Demo 页面内容
  *
  * @param list 商品列表数据
  * @param isRefreshing 是否正在刷新
@@ -159,16 +162,25 @@ private fun GoodsListItem(goods: Goods) {
 /**
  * Network List Demo 界面浅色主题预览
  *
+ * @param goods 商品预览数据
  * @author Joker.X
  */
-@Preview(showBackground = true)
+@ScreenPreview
 @Composable
-private fun NetworkListDemoPreview() {
+private fun NetworkListDemoScreenPreview(
+    @PreviewParameter(GoodsPreviewParameterProvider::class)
+    goods: List<Goods>,
+) {
     AppTheme {
         NetworkListDemoScreen(
-            uiState = BaseNetWorkListUiState.Success,
-            list = previewGoodsList(),
-            hasMoreData = true
+            // 空列表展示空状态，其他数据展示成功状态
+            uiState = if (goods.isEmpty()) {
+                BaseNetWorkListUiState.Empty
+            } else {
+                BaseNetWorkListUiState.Success
+            },
+            list = goods,
+            hasMoreData = goods.isNotEmpty(),
         )
     }
 }
@@ -176,28 +188,24 @@ private fun NetworkListDemoPreview() {
 /**
  * Network List Demo 界面深色主题预览
  *
+ * @param goods 商品预览数据
  * @author Joker.X
  */
-@Preview(showBackground = true)
+@ScreenPreviewDark
 @Composable
-private fun NetworkListDemoPreviewDark() {
+private fun NetworkListDemoScreenPreviewDark(
+    @PreviewParameter(GoodsPreviewParameterProvider::class)
+    goods: List<Goods>,
+) {
     AppTheme(darkTheme = true) {
         NetworkListDemoScreen(
-            uiState = BaseNetWorkListUiState.Success,
-            list = previewGoodsList(),
-            hasMoreData = true
+            uiState = if (goods.isEmpty()) {
+                BaseNetWorkListUiState.Empty
+            } else {
+                BaseNetWorkListUiState.Success
+            },
+            list = goods,
+            hasMoreData = goods.isNotEmpty(),
         )
     }
 }
-
-/**
- * 预览用商品列表数据
- *
- * @return 商品预览数据列表
- * @author Joker.X
- */
-private fun previewGoodsList() = listOf(
-    Goods(id = 1, title = "小米手机 14", subTitle = "直屏旗舰", price = 3999, sold = 5000),
-    Goods(id = 2, title = "Apple AirPods", subTitle = "二代", price = 1299, sold = 8000),
-    Goods(id = 3, title = "Switch OLED", subTitle = "游戏机", price = 2599, sold = 3000),
-)

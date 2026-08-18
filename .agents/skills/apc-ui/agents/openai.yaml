@@ -1,0 +1,4 @@
+interface:
+  display_name: "APC UI"
+  short_description: "使用项目设计系统实现统一响应式 Compose 界面"
+  default_prompt: "使用 $apc-ui 按项目设计系统实现这个页面布局。"

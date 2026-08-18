@@ -29,7 +29,7 @@ import com.joker.kit.feature.demo.viewmodel.NetworkDemoViewModel
 internal fun NetworkDemoRoute(
     viewModel: NetworkDemoViewModel = hiltViewModel()
 ) {
-    // 收集 UI 状态
+    // 收集页面请求状态
     val uiState by viewModel.uiState.collectAsState()
 
     NetworkDemoScreen(
@@ -65,7 +65,7 @@ internal fun NetworkDemoScreen(
 }
 
 /**
- * Network Demo 内容视图
+ * Network Demo 页面内容
  *
  * @param data 商品数据
  * @author Joker.X

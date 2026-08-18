@@ -1,0 +1,4 @@
+interface:
+  display_name: "APC Theme"
+  short_description: "维护 Compose 主题、颜色、字体、形状与动态配色"
+  default_prompt: "使用 $apc-theme 实现这个主题或深浅色需求。"

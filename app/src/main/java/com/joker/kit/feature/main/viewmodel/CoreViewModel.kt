@@ -1,6 +1,6 @@
 package com.joker.kit.feature.main.viewmodel
 
-import androidx.lifecycle.ViewModel
+import com.joker.kit.core.base.viewmodel.BaseViewModel
 import com.joker.kit.core.state.DemoCounterState
 import com.joker.kit.feature.main.data.DemoCardData
 import com.joker.kit.feature.main.model.DemoCardInfo
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CoreViewModel @Inject constructor(
     counterState: DemoCounterState
-) : ViewModel() {
+) : BaseViewModel() {
     /**
      * Demo 卡片源数据
      *
@@ -41,4 +41,14 @@ class CoreViewModel @Inject constructor(
      * @author Joker.X
      */
     val count: StateFlow<Int> = counterState.count
+
+    /**
+     * 处理 Demo 卡片点击
+     *
+     * @param info Demo 卡片信息
+     * @author Joker.X
+     */
+    fun onCardClick(info: DemoCardInfo) {
+        info.navigateAction?.invoke()
+    }
 }

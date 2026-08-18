@@ -26,18 +26,26 @@ class LocalStorageViewModel @Inject constructor(
 
     /** 用户 id 输入 */
     private val _userId = MutableStateFlow("1")
+
+    /** 对外暴露的用户 ID 输入状态 */
     val userId: StateFlow<String> = _userId.asStateFlow()
 
     /** 昵称输入 */
     private val _nickName = MutableStateFlow("")
+
+    /** 对外暴露的昵称输入状态 */
     val nickName: StateFlow<String> = _nickName.asStateFlow()
 
     /** 头像输入 */
     private val _avatar = MutableStateFlow("")
+
+    /** 对外暴露的头像输入状态 */
     val avatar: StateFlow<String> = _avatar.asStateFlow()
 
     /** 当前用户信息 */
     private val _userStateFlow = MutableStateFlow<User?>(null)
+
+    /** 对外暴露的本地用户信息状态 */
     val user: StateFlow<User?> = _userStateFlow.asStateFlow()
 
     init {
@@ -81,7 +89,9 @@ class LocalStorageViewModel @Inject constructor(
      */
     fun saveUser() {
         viewModelScope.launch {
+            // 用户 ID 输入转换结果，无效输入回退为 0
             val idLong = _userId.value.toLongOrNull() ?: 0L
+            // 根据页面输入构建待保存用户信息
             val user = User(
                 id = idLong,
                 nickName = _nickName.value.ifBlank { "未命名" },
@@ -115,6 +125,7 @@ class LocalStorageViewModel @Inject constructor(
      */
     fun loadUser() {
         viewModelScope.launch {
+            // 本地存储中的用户信息
             val saved = userInfoStoreRepository.getUserInfo()
             _userStateFlow.value = saved
             if (saved != null) {

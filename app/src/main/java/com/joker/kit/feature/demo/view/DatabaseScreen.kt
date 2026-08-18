@@ -60,11 +60,11 @@ import java.util.Locale
 internal fun DatabaseRoute(
     viewModel: DatabaseViewModel = hiltViewModel()
 ) {
-    // 列表数据（Demo 表 Flow -> State）
+    // 收集数据库列表状态
     val items by viewModel.items.collectAsState()
-    // 标题输入状态
+    // 收集标题输入状态
     val title by viewModel.title.collectAsState()
-    // 描述输入状态
+    // 收集描述输入状态
     val description by viewModel.description.collectAsState()
 
     DatabaseScreen(
@@ -122,7 +122,7 @@ internal fun DatabaseScreen(
 }
 
 /**
- * 数据库内容视图
+ * 数据库页面内容
  *
  * @param title 标题输入
  * @param description 描述输入
@@ -308,6 +308,7 @@ private fun DemoListItem(
     item: DemoEntity,
     onDeleteItem: (Long) -> Unit
 ) {
+    // 数据记录更新时间展示文案
     val formattedTime = remember(item.updatedAt) {
         SimpleDateFormat("MM-dd HH:mm", Locale.getDefault()).format(Date(item.updatedAt))
     }
@@ -322,6 +323,7 @@ private fun DemoListItem(
             )
         },
         supportingContent = {
+            // 空描述对应的默认展示文案
             val desc = item.description.ifBlank { "暂无描述" }
             AppText(
                 text = "$desc · 更新于 $formattedTime",

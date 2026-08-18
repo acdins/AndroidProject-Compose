@@ -46,7 +46,7 @@ internal fun LoginScreen(
         titleText = "登录",
         onBackClick = { navigateBack() },
     ) {
-        LoginContentView(
+        LoginContent(
             onLoginClick = onLoginClick
         )
     }
@@ -59,7 +59,7 @@ internal fun LoginScreen(
  * @author Joker.X
  */
 @Composable
-private fun LoginContentView(
+private fun LoginContent(
     onLoginClick: () -> Unit = {},
 ) {
     Column(

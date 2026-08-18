@@ -70,6 +70,16 @@ class NavigationViewModel @Inject constructor(
     }
 
     /**
+     * 处理 Demo 卡片点击
+     *
+     * @param info Demo 卡片信息
+     * @author Joker.X
+     */
+    fun onCardClick(info: DemoCardInfo) {
+        info.navigateAction?.invoke()
+    }
+
+    /**
      * 监听结果回传事件
      *
      * @author Joker.X

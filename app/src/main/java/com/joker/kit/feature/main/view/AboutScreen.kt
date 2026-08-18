@@ -87,6 +87,7 @@ import kotlin.math.sin
 internal fun AboutRoute(
     viewModel: AboutViewModel = hiltViewModel()
 ) {
+    // 系统 URI 打开器
     val uriHandler = LocalUriHandler.current
 
     AboutScreen(
@@ -123,34 +124,76 @@ internal fun AboutScreen(
     onProjectLinkClick: (LinkItem) -> Unit = {},
     onResourceLinkClick: (LinkItem) -> Unit = {}
 ) {
+    AboutContent(
+        developerLink = developerLink,
+        projectLinks = projectLinks,
+        resourceLinks = resourceLinks,
+        onDeveloperClick = onDeveloperClick,
+        onProjectLinkClick = onProjectLinkClick,
+        onResourceLinkClick = onResourceLinkClick
+    )
+}
+
+/**
+ * About 页面内容
+ *
+ * @param developerLink 开发者主页
+ * @param projectLinks 项目地址列表
+ * @param resourceLinks 资源列表
+ * @param onDeveloperClick 开发者点击回调
+ * @param onProjectLinkClick 项目地址点击回调
+ * @param onResourceLinkClick 资源点击回调
+ * @author Joker.X
+ */
+@Composable
+private fun AboutContent(
+    developerLink: LinkItem,
+    projectLinks: List<LinkItem>,
+    resourceLinks: List<LinkItem>,
+    onDeveloperClick: (LinkItem) -> Unit,
+    onProjectLinkClick: (LinkItem) -> Unit,
+    onResourceLinkClick: (LinkItem) -> Unit
+) {
+    // 当前 Android 上下文
     val context = LocalContext.current
+    // 应用显示名称
     val appName = PackageUtils.getCurrentAppName(context)
+    // 应用版本名称
     val appVersionName = PackageUtils.getCurrentVersionName(context)
+    // 应用版本号
     val appVersionCode = PackageUtils.getCurrentVersionCode(context).toString()
+    // 页面滚动状态
     val scrollState = rememberScrollState(0)
+    // 顶部内容完全淡出所需的滚动距离
     val scrollFadeThresholdPx = with(LocalDensity.current) { 220.dp.toPx() }
+    // 顶部内容随滚动变化的归一化进度
     val scrollFraction = (scrollState.value / scrollFadeThresholdPx).coerceIn(0f, 1f)
 
+    // 首次进入页面的动画启动状态
     var isAnimationReady by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         delay(100)
         isAnimationReady = true
     }
 
+    // 顶部内容入场位移
     val entranceTranslationY by animateDpAsState(
         targetValue = if (isAnimationReady) 0.dp else 30.dp,
         animationSpec = tween(durationMillis = 1000, easing = EaseOutCubic),
         label = "about_entrance_translation"
     )
+    // 页面入场透明度
     val entranceAlpha by animateFloatAsState(
         targetValue = if (isAnimationReady) 1f else 0f,
         animationSpec = tween(durationMillis = 800),
         label = "about_entrance_alpha"
     )
+    // 顶部内容滚动透明度
     val contentAlpha by animateFloatAsState(
         targetValue = 1f - scrollFraction,
         label = "about_content_alpha"
     )
+    // 顶部内容滚动缩放比例
     val contentScale by animateFloatAsState(
         targetValue = 1f - scrollFraction * 0.1f,
         label = "about_content_scale"
@@ -202,7 +245,9 @@ internal fun AboutScreen(
  */
 @Composable
 private fun AnimatedAuroraBackground() {
+    // 极光背景无限动画控制器
     val infiniteTransition = rememberInfiniteTransition(label = "about_aurora_transition")
+    // 极光圆心运动使用的周期时间值
     val time by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 2f * PI.toFloat(),
@@ -213,8 +258,11 @@ private fun AnimatedAuroraBackground() {
         label = "about_aurora_time"
     )
 
+    // 当前主题是否为深色模式
     val isDarkTheme = MaterialTheme.colorScheme.surface.luminance() < 0.5f
+    // 页面背景颜色
     val backgroundColor = MaterialTheme.colorScheme.background
+    // 四组极光渐变颜色
     val (color1, color2, color3, color4) = if (isDarkTheme) {
         listOf(
             Color(0.0f, 0.31f, 0.58f),
@@ -230,7 +278,9 @@ private fun AnimatedAuroraBackground() {
             Color(0.73f, 0.7f, 0.98f)
         )
     }
+    // 主色对应的第五组极光颜色
     val color5 = MaterialTheme.colorScheme.primary
+    // 极光背景顶部颜色
     val topColor = if (isDarkTheme) Color.Black else backgroundColor
 
     FullScreenBox(
@@ -241,10 +291,14 @@ private fun AnimatedAuroraBackground() {
                 .fillMaxSize()
                 .blur(150.dp)
                 .drawBehind {
+                    // 当前绘制区域宽度
                     val width = size.width
+                    // 当前绘制区域高度
                     val height = size.height
 
+                    // 第一组极光圆半径
                     val radius1 = width * 0.7f
+                    // 第一组极光圆心
                     val center1 = Offset(
                         x = width * (0.3f + 0.2f * cos(time)),
                         y = height * (0.4f + 0.2f * sin(time))
@@ -259,7 +313,9 @@ private fun AnimatedAuroraBackground() {
                         center = center1
                     )
 
+                    // 第二组极光圆半径
                     val radius2 = width * 0.6f
+                    // 第二组极光圆心
                     val center2 = Offset(
                         x = width * (0.7f + 0.2f * cos(time * 1.5f + PI.toFloat())),
                         y = height * (0.6f + 0.15f * sin(time * 1.5f + PI.toFloat()))
@@ -274,7 +330,9 @@ private fun AnimatedAuroraBackground() {
                         center = center2
                     )
 
+                    // 第三组极光圆半径
                     val radius3 = width * 0.8f
+                    // 第三组极光圆心
                     val center3 = Offset(
                         x = width * (0.6f + 0.2f * cos(time * 0.8f + PI.toFloat() / 2)),
                         y = height * (0.3f + 0.2f * sin(time * 0.8f + PI.toFloat() / 2))
@@ -289,7 +347,9 @@ private fun AnimatedAuroraBackground() {
                         center = center3
                     )
 
+                    // 第四组极光圆半径
                     val radius4 = width * 0.5f
+                    // 第四组极光圆心
                     val center4 = Offset(
                         x = width * (0.2f + 0.1f * cos(time * 1.2f + PI.toFloat() / 4)),
                         y = height * (0.7f + 0.1f * sin(time * 1.2f + PI.toFloat() / 4))
@@ -304,7 +364,9 @@ private fun AnimatedAuroraBackground() {
                         center = center4
                     )
 
+                    // 第五组极光圆半径
                     val radius5 = width * 0.7f
+                    // 第五组极光圆心
                     val center5 = Offset(
                         x = width * (0.8f + 0.15f * cos(time * 0.9f + PI.toFloat() * 1.5f)),
                         y = height * (0.2f + 0.15f * sin(time * 0.9f + PI.toFloat() * 1.5f))

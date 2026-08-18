@@ -51,7 +51,7 @@ internal fun NavigationResultScreen(
 }
 
 /**
- * 结果回传内容视图
+ * 结果回传页面内容
  *
  * @param onSendResult 发送结果回调
  * @author Joker.X

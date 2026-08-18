@@ -22,8 +22,10 @@ class NetworkListDemoViewModel @Inject constructor(
 ) : BaseNetWorkListViewModel<Goods>(
 ) {
 
+    /** 首屏加载至少保持基类规定的最短时长 */
     override val enableMinLoadingTime: Boolean get() = true
 
+    /** 商品列表每页请求数量 */
     override val pageSize: Int get() = 15
 
     init {
@@ -31,7 +33,7 @@ class NetworkListDemoViewModel @Inject constructor(
     }
 
     /**
-     * 重写请求API Flow，获取商品列表
+     * 获取商品列表响应流
      *
      * @return 商品分页数据流
      * @author Joker.X

@@ -44,7 +44,7 @@ import com.joker.kit.feature.demo.viewmodel.StateManagementViewModel
 internal fun StateManagementRoute(
     viewModel: StateManagementViewModel = hiltViewModel()
 ) {
-    // 从 ViewModel 中收集 count 状态
+    // 收集计数器状态
     val count by viewModel.count.collectAsState()
 
     StateManagementScreen(
@@ -86,7 +86,7 @@ internal fun StateManagementScreen(
 }
 
 /**
- * 状态管理内容视图
+ * 状态管理页面内容
  *
  * @param count 当前计数
  * @param onIncrease 递增回调

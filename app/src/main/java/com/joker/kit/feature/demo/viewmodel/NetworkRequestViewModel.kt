@@ -30,6 +30,8 @@ class NetworkRequestViewModel @Inject constructor(
      * @author Joker.X
      */
     private val _goods = MutableStateFlow<Goods?>(null)
+
+    /** 对外暴露的商品信息状态 */
     val goods: StateFlow<Goods?> = _goods.asStateFlow()
 
     /**

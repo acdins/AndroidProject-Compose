@@ -1,12 +1,8 @@
 package com.joker.kit.feature.main.view
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.only
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,7 +24,9 @@ import com.joker.kit.feature.main.viewmodel.MainViewModel
 internal fun MainRoute(
     viewModel: MainViewModel = hiltViewModel()
 ) {
+    // 收集当前底部导航页签位置
     val currentPageIndex by viewModel.currentPageIndex.collectAsState()
+
     MainScreen(
         currentPageIndex = currentPageIndex,
         onNavigationItemSelected = viewModel::updateDestination
@@ -47,53 +45,28 @@ internal fun MainScreen(
     currentPageIndex: Int = 0,
     onNavigationItemSelected: (Int) -> Unit = {}
 ) {
-    MainScreenContent(
-        currentPageIndex = currentPageIndex,
-        onNavigationItemSelected = onNavigationItemSelected
-    )
-}
-
-/**
- * 主页面内容视图，包含底部导航和内容区域
- *
- * @param currentPageIndex 当前页面索引
- * @param onNavigationItemSelected 导航项选中回调
- * @author Joker.X
- */
-@Composable
-private fun MainScreenContent(
-    currentPageIndex: Int,
-    onNavigationItemSelected: (Int) -> Unit
-) {
-    Scaffold(
-        contentWindowInsets = WindowInsets.safeDrawing.only(
-            WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom
-        ),
-        bottomBar = {
-            BottomNavigationBar(
-                destinations = TopLevelDestination.entries,
-                onNavigateToDestination = onNavigationItemSelected,
-                currentPageIndex = currentPageIndex
-            )
-        }
-    ) { innerPadding ->
-        MainScreenContentView(
+    Column(modifier = Modifier.fillMaxSize()) {
+        MainContent(
             currentPageIndex = currentPageIndex,
-            modifier = Modifier
-                .padding(innerPadding)
+            modifier = Modifier.weight(1f)
+        )
+        BottomNavigationBar(
+            destinations = TopLevelDestination.entries,
+            onNavigateToDestination = onNavigationItemSelected,
+            currentPageIndex = currentPageIndex
         )
     }
 }
 
 /**
- * 主页面内容区域
+ * 主页面内容
  *
  * @param currentPageIndex 当前页面索引
  * @param modifier 内容区域修饰符
  * @author Joker.X
  */
 @Composable
-private fun MainScreenContentView(
+private fun MainContent(
     currentPageIndex: Int,
     modifier: Modifier = Modifier
 ) {

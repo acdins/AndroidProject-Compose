@@ -32,11 +32,12 @@ import com.joker.kit.feature.main.viewmodel.ExpandViewModel
 internal fun ExpandRoute(
     viewModel: ExpandViewModel = hiltViewModel()
 ) {
+    // 收集扩展能力卡片列表
     val cards by viewModel.cards.collectAsState()
 
     ExpandScreen(
         cards = cards,
-        onCardClick = { info -> info.navigateAction?.invoke() }
+        onCardClick = viewModel::onCardClick
     )
 }
 
@@ -51,6 +52,24 @@ internal fun ExpandRoute(
 internal fun ExpandScreen(
     cards: List<DemoCardInfo> = emptyList(),
     onCardClick: (DemoCardInfo) -> Unit = {}
+) {
+    ExpandContent(
+        cards = cards,
+        onCardClick = onCardClick
+    )
+}
+
+/**
+ * Expand 页面内容
+ *
+ * @param cards Demo 卡片列表
+ * @param onCardClick 卡片点击回调
+ * @author Joker.X
+ */
+@Composable
+private fun ExpandContent(
+    cards: List<DemoCardInfo>,
+    onCardClick: (DemoCardInfo) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier

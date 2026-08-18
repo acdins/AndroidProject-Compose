@@ -24,7 +24,7 @@ class NetworkDemoViewModel @Inject constructor(
     }
 
     /**
-     * 重写请求API Flow，获取商品信息
+     * 获取商品信息响应流
      *
      * @return 商品信息响应流
      * @author Joker.X

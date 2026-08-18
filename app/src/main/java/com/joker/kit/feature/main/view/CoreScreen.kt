@@ -36,12 +36,15 @@ import com.joker.kit.feature.main.viewmodel.CoreViewModel
 internal fun CoreRoute(
     viewModel: CoreViewModel = hiltViewModel()
 ) {
+    // 收集 Demo 卡片列表
     val cards by viewModel.cards.collectAsState()
+    // 收集全局计数器状态
     val count by viewModel.count.collectAsState()
+
     CoreScreen(
         cards = cards,
         counter = count,
-        onCardClick = { info -> info.navigateAction?.invoke() }
+        onCardClick = viewModel::onCardClick
     )
 }
 
@@ -58,6 +61,27 @@ internal fun CoreScreen(
     cards: List<DemoCardInfo> = emptyList(),
     counter: Int = 0,
     onCardClick: (DemoCardInfo) -> Unit = {}
+) {
+    CoreContent(
+        cards = cards,
+        counter = counter,
+        onCardClick = onCardClick
+    )
+}
+
+/**
+ * Core 页面内容
+ *
+ * @param cards Demo 卡片列表
+ * @param counter 全局计数器值，大于 0 时在列表顶部展示
+ * @param onCardClick 卡片点击回调
+ * @author Joker.X
+ */
+@Composable
+private fun CoreContent(
+    cards: List<DemoCardInfo>,
+    counter: Int,
+    onCardClick: (DemoCardInfo) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier

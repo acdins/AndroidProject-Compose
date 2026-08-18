@@ -46,7 +46,7 @@ internal fun UserInfoScreen(
         titleText = "用户信息",
         onBackClick = { navigateBack() },
     ) {
-        UserInfoContentView(
+        UserInfoContent(
             modifier = Modifier.padding(SpacePaddingLarge),
             onLogoutClick = onLogoutClick
         )
@@ -61,7 +61,7 @@ internal fun UserInfoScreen(
  * @author Joker.X
  */
 @Composable
-private fun UserInfoContentView(
+private fun UserInfoContent(
     modifier: Modifier = Modifier,
     onLogoutClick: () -> Unit = {},
 ) {

@@ -44,8 +44,9 @@ AndroidProject-Compose 是一个包含网络、状态、导航、主题、数据
 
 ### 说明文档
 
-- **说明文档**：[在线查看](https://compose.dusksnow.top)
-- **说明**：与代码同步的在线文档，包含快速开始、架构说明、示例路由、常见定制点等，便于理解项目与学习。
+- **项目内文档**：[本地查看](docs/android-project-compose/README.md)
+- **在线文档**：[compose.dusksnow.top](https://compose.dusksnow.top)
+- **说明**：项目内文档与在线文档包含快速开始、架构说明、Core 能力、导航和 Feature 开发规范，可作为开发与 AI 编码工具的实现依据。
 
 ## 🛠️ 技术栈
 
@@ -109,21 +110,19 @@ AndroidProject-Compose 是一个包含网络、状态、导航、主题、数据
 
 ```
 ├── core/                 # 核心
+│   ├── annotation/       # 通用注解
 │   ├── base/             # 基础抽象
 │   ├── data/             # 数据层
 │   ├── database/         # 数据库
 │   ├── datastore/        # 数据存储
 │   ├── designsystem/     # 设计系统
 │   ├── model/            # 数据模型
+│   ├── navigation/       # 导航运行时与路由
 │   ├── network/          # 网络层
 │   ├── result/           # 结果处理
 │   ├── state/            # 状态管理
 │   ├── ui/               # UI 组件
 │   └── util/             # 工具类
-├── navigation/           # 导航模块
-│   ├── routes/           # 路由定义
-│   ├── results/          # 路由返回结果
-│   └── extension/        # 导航扩展
 ├── feature/              # 功能模块
 │   ├── main/             # 主模块
 │   ├── auth/             # 认证模块

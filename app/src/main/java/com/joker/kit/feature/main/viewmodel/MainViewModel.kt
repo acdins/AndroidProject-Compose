@@ -17,7 +17,10 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
 ) : BaseViewModel() {
 
+    /** 当前底部导航页签索引状态源 */
     private val _currentPageIndex = MutableStateFlow(0)
+
+    /** 对外暴露的当前底部导航页签索引 */
     val currentPageIndex: StateFlow<Int> = _currentPageIndex.asStateFlow()
 
     /**
